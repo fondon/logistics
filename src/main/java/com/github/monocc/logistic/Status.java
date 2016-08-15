@@ -9,7 +9,7 @@ package com.github.monocc.logistic;
  */
 public enum Status {
 
-    NO_RESULT(0, "物流单暂无结果"), SUCCESS(1, "查询成功"), ERROR(2, "接口出现异常");
+    NO_RESULT(0, "此单无物流信息"), SUCCESS(1, "查询成功"), ERROR(2, "接口出现异常");
 
     private int code;
     private String name;
@@ -25,5 +25,17 @@ public enum Status {
 
     public String getName() {
         return name;
+    }
+
+    public boolean isNoResult() {
+        return NO_RESULT.equals(this);
+    }
+
+    public boolean isSuccess() {
+        return SUCCESS.equals(this);
+    }
+
+    public boolean isError() {
+        return ERROR.equals(this);
     }
 }

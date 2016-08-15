@@ -1,6 +1,7 @@
 package com.github.monocc.logistic.kdniao;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.util.IOUtils;
 import com.github.monocc.logistic.*;
 import com.github.monocc.logistic.utils.PropertiesUtils;
 import org.apache.commons.codec.binary.Base64;
@@ -32,7 +33,7 @@ import java.util.Properties;
  */
 public class KdniaoManager extends AbstarctLogisticManager {
 
-    private static final Properties PROP = PropertiesUtils.load("com/dgpost/express/kdniao/shipper.properties");
+    private static final Properties PROP = PropertiesUtils.load("com/github/monocc/logistic/kdniao/shipper.properties");
 
     private static final Logger LOG = LoggerFactory.getLogger(KdniaoManager.class);
 
@@ -71,23 +72,35 @@ public class KdniaoManager extends AbstarctLogisticManager {
         ShipperCompany shipperCompany = StandarShipperCompany.getStandarShipperCompany(shipperCompanyCode);
 
         UnityLogistic logistic = new UnityLogistic();
-        logistic.setStatus(returnData.isSuccess() ? Status.SUCCESS : Status.NO_RESULT);
+        boolean isSuccess = false;
+        if(returnData.isSuccess() && returnData.getState() != null) {
+            logistic.setStatus(Status.SUCCESS);
+            isSuccess = true;
+        } else  {
+            logistic.setStatus(Status.NO_RESULT);
+        }
         logistic.setMessage(returnData.getReason());
         logistic.setCode(shipperCompanyCode);
         logistic.setShipperCompany(new SimpleShipperCompany(shipperCompanyCode, shipperCompany.getName()));
+        if(!isSuccess) {
+            return logistic;
+        }
         logistic.setState(getState(returnData.getState()));
-        if(returnData.getTraces() != null) {
+        if(returnData.getTraces() != null && !returnData.getTraces().isEmpty()) {
             for(KdniaoRdataTrace trace : returnData.getTraces()) {
                 logistic.addTrace(new SimpleTrace(trace.getAcceptTime(), trace.getAcceptStation()));
             }
-        }
-        if(tracesOrder.isDesc()) {
-            Collections.reverse(logistic.getTraces());
+            if(tracesOrder.isDesc()) {
+                Collections.reverse(logistic.getTraces());
+            }
         }
         return logistic;
     }
 
     private State getState(String state) {
+        if(state == null) {
+            return State.UNKOWN;
+        }
         switch (state) {
             case "2" :
                 return State.WAY;
@@ -118,13 +131,8 @@ public class KdniaoManager extends AbstarctLogisticManager {
             body = EntityUtils.toString(entity);
             EntityUtils.consume(entity);
         } finally {
-            if(response != null) {
-                try {
-                    response.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+            IOUtils.close(response);
+            IOUtils.close(httpclient);
         }
         return body;
     }

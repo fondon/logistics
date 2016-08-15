@@ -16,8 +16,8 @@ public class LogisticJsonBean {
         this.logistic = logistic;
     }
 
-    public String getStatus() {
-        return logistic.getStatus().getName();
+    public int getStatus() {
+        return logistic.getStatus().getCode();
     }
 
     public String getState() {
