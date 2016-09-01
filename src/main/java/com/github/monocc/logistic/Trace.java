@@ -3,22 +3,30 @@ package com.github.monocc.logistic;
 /**
  * 快递跟踪，跟踪快递的状态
  */
-public interface Trace {
-    /**
-     * 跟踪时间
-     * @return
-     */
-    String getTime();
+public class Trace {
+    private String time;
+    private String content;
+    private String remark;
 
-    /**
-     * 跟踪时间的内容
-     * @return
-     */
-    String getContent();
+    public Trace(String time, String content) {
+        this(time, content, null);
+    }
 
-    /**
-     * 备注
-     * @return
-     */
-    String getRemark();
+    public Trace(String time, String content, String remark) {
+        this.time = time;
+        this.content = content;
+        this.remark = remark;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
 }

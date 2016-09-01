@@ -1,7 +1,7 @@
 package com.github.monocc.logistic;
 
 /**
- * 物流管理
+ * 物流Manager
  */
 public interface LogisticManager extends Order {
 

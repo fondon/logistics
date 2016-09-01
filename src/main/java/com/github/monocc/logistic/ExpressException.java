@@ -1,7 +1,7 @@
 package com.github.monocc.logistic;
 
 /**
- * Created by chongdi.yang on 2016/8/8.
+ * 自定义物流异常
  */
 public class ExpressException extends RuntimeException {
     public ExpressException() {

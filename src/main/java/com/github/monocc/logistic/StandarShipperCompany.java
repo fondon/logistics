@@ -19,7 +19,7 @@ public class StandarShipperCompany {
         Properties properties = PropertiesUtils.load(PATH, StandarShipperCompany.class.getClassLoader());
         ShipperCompany company = null;
         for(Map.Entry<Object, Object> entry : properties.entrySet()) {
-            company = new SimpleShipperCompany(entry.getKey().toString(), entry.getValue().toString());
+            company = new ShipperCompany(entry.getKey().toString(), entry.getValue().toString());
             STANDAR.put(company.getCode(), company);
         }
     }

@@ -81,14 +81,14 @@ public class KdniaoManager extends AbstarctLogisticManager {
         }
         logistic.setMessage(returnData.getReason());
         logistic.setCode(shipperCompanyCode);
-        logistic.setShipperCompany(new SimpleShipperCompany(shipperCompanyCode, shipperCompany.getName()));
+        logistic.setShipperCompany(new ShipperCompany(shipperCompanyCode, shipperCompany.getName()));
         if(!isSuccess) {
             return logistic;
         }
         logistic.setState(getState(returnData.getState()));
         if(returnData.getTraces() != null && !returnData.getTraces().isEmpty()) {
             for(KdniaoRdataTrace trace : returnData.getTraces()) {
-                logistic.addTrace(new SimpleTrace(trace.getAcceptTime(), trace.getAcceptStation()));
+                logistic.addTrace(new Trace(trace.getAcceptTime(), trace.getAcceptStation()));
             }
             if(tracesOrder.isDesc()) {
                 Collections.reverse(logistic.getTraces());
