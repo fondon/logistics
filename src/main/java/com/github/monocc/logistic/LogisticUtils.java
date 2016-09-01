@@ -10,23 +10,22 @@ import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * 获取所有的已经实现的Manager
  */
-public class ExpressUtils {
+public class LogisticUtils {
 
     public final static Properties DEFAULT_CONF = PropertiesUtils.load("kuaidi.default.api.properties");
 
     private static Map<String, Object> instanceMap = new ConcurrentHashMap<>();
     private static ReadWriteLock lock = new ReentrantReadWriteLock();
 
-    private final static String KDNIAO = ExpressUtils.class.getName() + ".kdniao";
-    private final static String HTTP_CLIENT_POOL = ExpressUtils.class.getName() + ".http.client.pool";
-    private final static String HTTP_CLIENT_REQUEST_CONFIG = ExpressUtils.class.getName() + ".http.client.request.config";
+    private final static String KDNIAO = LogisticUtils.class.getName() + ".kdniao";
+    private final static String HTTP_CLIENT_POOL = LogisticUtils.class.getName() + ".http.client.pool";
+    private final static String HTTP_CLIENT_REQUEST_CONFIG = LogisticUtils.class.getName() + ".http.client.request.config";
 
     /**
      * 取得快递鸟Manager

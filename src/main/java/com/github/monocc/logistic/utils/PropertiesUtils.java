@@ -1,6 +1,8 @@
 package com.github.monocc.logistic.utils;
 
-import com.github.monocc.logistic.ExpressException;
+
+import com.github.monocc.logistic.Logistic;
+import com.github.monocc.logistic.LogisticException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,7 +25,7 @@ public abstract class PropertiesUtils {
         try {
             properties.load(is);
         } catch (IOException e) {
-            throw new ExpressException("load properties fail", e);
+            throw new LogisticException("load properties fail", e);
         } finally {
             try {
                 if(is != null) {
