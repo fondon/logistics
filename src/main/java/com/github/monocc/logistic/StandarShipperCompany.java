@@ -2,6 +2,7 @@ package com.github.monocc.logistic;
 
 import com.github.monocc.logistic.utils.PropertiesUtils;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
@@ -22,6 +23,7 @@ public class StandarShipperCompany {
             company = new ShipperCompany(entry.getKey().toString(), entry.getValue().toString());
             STANDAR.put(company.getCode(), company);
         }
+        STANDAR = Collections.unmodifiableMap(STANDAR);
     }
 
     public static ShipperCompany getStandarShipperCompany(String key) {
