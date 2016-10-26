@@ -56,11 +56,12 @@ public class KdniaoManager extends AbstarctLogisticManager {
     public Logistic doQuery(String shipperCompanyCode, String logisticCode, TracesOrder tracesOrder) {
         //设置基础信息
         UnityLogistic logistic = new UnityLogistic();
-        ShipperCompany shipperCompany = StandarShipperCompany.getStandarShipperCompany(shipperCompanyCode);
-        logistic.setShipperCompany(new ShipperCompany(shipperCompanyCode, shipperCompany.getName()));
         logistic.setCode(shipperCompanyCode);
-        //组装请求基础信息
         String selfShipperCode = getProperties().getProperty(shipperCompanyCode);
+        ShipperCompany shipperCompany = StandarShipperCompany.getStandarShipperCompany(selfShipperCode);
+        logistic.setShipperCompany(new ShipperCompany(shipperCompanyCode, shipperCompany.getName()));
+
+        //组装请求基础信息
         String requestData = JSON.toJSONString(new RequestData(selfShipperCode, logisticCode));
         List<NameValuePair> nvps = getNameValuePars(requestData);
         String body = null;
