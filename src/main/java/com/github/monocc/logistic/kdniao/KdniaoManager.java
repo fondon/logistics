@@ -54,6 +54,12 @@ public class KdniaoManager extends AbstarctLogisticManager {
 
     @Override
     public Logistic doQuery(String shipperCompanyCode, String logisticCode, TracesOrder tracesOrder) {
+        //设置基础信息
+        UnityLogistic logistic = new UnityLogistic();
+        ShipperCompany shipperCompany = StandarShipperCompany.getStandarShipperCompany(shipperCompanyCode);
+        logistic.setShipperCompany(new ShipperCompany(shipperCompanyCode, shipperCompany.getName()));
+        logistic.setCode(shipperCompanyCode);
+        //组装请求基础信息
         String selfShipperCode = getProperties().getProperty(shipperCompanyCode);
         String requestData = JSON.toJSONString(new RequestData(selfShipperCode, logisticCode));
         List<NameValuePair> nvps = getNameValuePars(requestData);
@@ -62,16 +68,13 @@ public class KdniaoManager extends AbstarctLogisticManager {
             body = doPost(getRequestUrl(), nvps);
         } catch (IOException e) {
             //网络问题，捕获异常，是否需要重试！！！
-            e.printStackTrace();
+            LOG.error("请求接口网络出错", e);
+            logistic.setStatus(Status.ERROR);
+            return logistic;
         }
-        if(body == null) {
-            return null;
-        }
+
         LOG.info(body);
         KdniaoRdata returnData = JSON.parseObject(body, KdniaoRdata.class);
-        ShipperCompany shipperCompany = StandarShipperCompany.getStandarShipperCompany(shipperCompanyCode);
-
-        UnityLogistic logistic = new UnityLogistic();
         boolean isSuccess = false;
         if(returnData.isSuccess() && returnData.getState() != null) {
             logistic.setStatus(Status.SUCCESS);
@@ -80,8 +83,6 @@ public class KdniaoManager extends AbstarctLogisticManager {
             logistic.setStatus(Status.NO_RESULT);
         }
         logistic.setMessage(returnData.getReason());
-        logistic.setCode(shipperCompanyCode);
-        logistic.setShipperCompany(new ShipperCompany(shipperCompanyCode, shipperCompany.getName()));
         if(!isSuccess) {
             return logistic;
         }
@@ -96,6 +97,7 @@ public class KdniaoManager extends AbstarctLogisticManager {
         }
         return logistic;
     }
+
 
     private State getState(String state) {
         if(state == null) {
