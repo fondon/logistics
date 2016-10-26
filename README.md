@@ -20,7 +20,7 @@
 ...
 
 
-使用方法：
+Usage:
 ```java
-AppTest 中有响应的代码
+AppTest  相应的使用方法代码      
 ```
