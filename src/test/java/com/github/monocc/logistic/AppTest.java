@@ -11,7 +11,7 @@ public class AppTest {
 
     @Test
     public void testMain() {
-        Logistic logistic = LogisticUtils.getKdniaoLogisticManager().query("YTO", "jihheqrfe2hgi");
+        Logistic logistic = LogisticUtils.getKdniaoLogisticManager().query("YZBK", "9977937815523");
         System.out.println(JSON.toJSONString(logistic));
     }
 

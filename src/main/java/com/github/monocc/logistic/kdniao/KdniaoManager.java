@@ -37,7 +37,7 @@ public class KdniaoManager extends AbstarctLogisticManager {
 
     private static final Logger LOG = LoggerFactory.getLogger(KdniaoManager.class);
 
-    private String requestUrl = "http://api.kdniao.cc/Ebusiness/EbusinessOrderHandle.aspx";
+    private String requestUrl = "http://api.kdniao.com/Ebusiness/EbusinessOrderHandle.aspx";
     private String eBusinessID;
     private String appKey;
 
