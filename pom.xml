@@ -18,20 +18,6 @@
         </developer>
     </developers>
 
-    <distributionManagement>
-        <repository>
-            <id>11185</id>
-            <name>project deploy to nexus release</name>
-            <url>http://118.178.128.63:8081/nexus/content/repositories/11185/</url>
-        </repository>
-        <snapshotRepository>
-            <id>11185-snapshot</id>
-            <name>project deploy to nexus snapshot</name>
-            <url>http://118.178.128.63:8081/nexus/content/repositories/11185-snapshot/</url>
-        </snapshotRepository>
-    </distributionManagement>
-
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <httpclient.version>4.5.2</httpclient.version>
